@@ -1,0 +1,384 @@
+/* ── GENERAL ── */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+/* ── ACCESSIBILITY ── */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 9999;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
+/* High contrast mode */
+body.high-contrast {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+body.high-contrast .card {
+    background-color: #111 !important;
+    border-color: #fff !important;
+    color: #fff !important;
+}
+
+body.high-contrast .navbar {
+    background-color: #000 !important;
+    border-bottom: 2px solid #fff;
+}
+
+/* ── HERO SECTION ── */
+.hero-section {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 80px 0;
+}
+
+/* ── CONTINENT CARDS ── */
+.continent-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.continent-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.continent-emoji {
+    font-size: 3rem;
+}
+
+/* ── COUNTRY CARDS ── */
+.country-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.country-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+    background-color: #e8f4f8;
+}
+
+/* ── NEWS CARDS ── */
+.news-card {
+    border-radius: 10px;
+    border: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.news-card:hover {
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* ── FOOTER ── */
+.footer {
+    border-top: 1px solid #444;
+}
+
+/* ── FOCUS STYLES FOR ACCESSIBILITY ── */
+a:focus,
+button:focus {
+    outline: 3px solid #0d6efd;
+    outline-offset: 2px;
+}
+
+/* ── RESPONSIVE TEXT ── */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .continent-emoji {
+        font-size: 2rem;
+    }
+}
+
+/* ── CONTINENT HEADER ── */
+.continent-header {
+    padding: 60px 0;
+}
+
+/* ── COUNTRY CARDS ── */
+.country-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.country-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12) !important;
+    border-color: #0d6efd;
+}
+
+.country-flag {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+/* ── STATS BAR ── */
+.continent-header .h3 {
+    font-size: 1.8rem;
+}
+
+/* ── BREAKING NEWS TICKER ── */
+.breaking-news-bar {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.ticker-content {
+    white-space: nowrap;
+    animation: ticker-scroll 30s linear infinite;
+    display: inline-block;
+}
+
+@keyframes ticker-scroll {
+    0%   { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+}
+
+/* ── HERO SECTION ── */
+.hero-section {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-title {
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    max-width: 500px;
+}
+
+/* ── GLOBE ANIMATION ── */
+.globe-container {
+    position: relative;
+    display: inline-block;
+}
+
+.globe-animation {
+    font-size: 12rem;
+    animation: globe-spin 8s linear infinite;
+    display: inline-block;
+    filter: drop-shadow(0 0 30px rgba(255,255,255,0.2));
+}
+
+@keyframes globe-spin {
+    0%   { transform: rotate(0deg) scale(1); }
+    50%  { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.globe-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+    height: 220px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+    animation: ring-pulse 3s ease-in-out infinite;
+}
+
+@keyframes ring-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1);   opacity: 0.3; }
+    50%       { transform: translate(-50%, -50%) scale(1.1); opacity: 0.7; }
+}
+
+/* ── CONTINENT CARDS ── */
+.continent-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border-radius: 14px !important;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.continent-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15) !important;
+}
+
+.continent-card-top {
+    height: 6px;
+    width: 100%;
+}
+
+.continent-emoji {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+/* ── FEATURES SECTION ── */
+.features-section {
+    background: #f8f9fa;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.feature-icon-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto;
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+}
+
+/* ── MIN HEIGHT HELPER ── */
+.min-vh-50 {
+    min-height: 50vh;
+} 
+
+/* ── LOADING OVERLAY ── */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 12, 41, 0.95);
+    z-index: 9999;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-overlay.d-none {
+    display: none !important;
+}
+
+.loading-box {
+    max-width: 300px;
+    width: 100%;
+}
+
+/* ── GLOBE SPINNER ── */
+.globe-spinner {
+    font-size: 5rem;
+    display: inline-block;
+    animation: globe-bounce 1.2s ease-in-out infinite;
+}
+
+@keyframes globe-bounce {
+    0%, 100% { transform: translateY(0) rotate(0deg);   }
+    25%       { transform: translateY(-15px) rotate(10deg);  }
+    75%       { transform: translateY(-8px) rotate(-10deg);  }
+}
+
+/* ── LOADING BAR ── */
+.loading-bar-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.loading-bar {
+    height: 100%;
+    width: 40%;
+    background: linear-gradient(90deg, #ffc107, #fff, #ffc107);
+    border-radius: 10px;
+    animation: loading-slide 1.5s ease-in-out infinite;
+}
+
+@keyframes loading-slide {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(350%); }
+}
+
+.loading-text {
+    font-size: 1.1rem;
+}
+
+/* ── SKELETON LOADING ── */
+.skeleton-box {
+    background: linear-gradient(
+        90deg,
+        #e0e0e0 25%,
+        #f0f0f0 50%,
+        #e0e0e0 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s infinite;
+    border-radius: 4px;
+    display: block;
+}
+
+@keyframes skeleton-shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+    border: none !important;
+    border-radius: 10px;
+}
+
+/* ── NEWS FADE IN ── */
+.news-card {
+    animation: fadeInUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Stagger animation delay for each card */
+.news-card:nth-child(1)  { animation-delay: 0.05s; }
+.news-card:nth-child(2)  { animation-delay: 0.10s; }
+.news-card:nth-child(3)  { animation-delay: 0.15s; }
+.news-card:nth-child(4)  { animation-delay: 0.20s; }
+.news-card:nth-child(5)  { animation-delay: 0.25s; }
+.news-card:nth-child(6)  { animation-delay: 0.30s; }
+.news-card:nth-child(7)  { animation-delay: 0.35s; }
+.news-card:nth-child(8)  { animation-delay: 0.40s; }
+.news-card:nth-child(9)  { animation-delay: 0.45s; }
+.news-card:nth-child(10) { animation-delay: 0.50s; }

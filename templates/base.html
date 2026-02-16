@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GlobalNews{% endblock %} - GlobalNews</title>
+    
+    <!-- Bootstrap CSS (free, no download needed) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Our custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation" aria-label="Main Navigation">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold" href="/" aria-label="GlobalNews Home">
+                🌐 GlobalNews
+            </a>
+
+            <!-- Mobile toggle button -->
+            <button class="navbar-toggler" type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Nav Links -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" aria-label="Home">
+                            <i class="bi bi-house"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" 
+                           data-bs-toggle="dropdown"
+                           aria-label="Browse by Continent">
+                            <i class="bi bi-globe"></i> Continents
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/continent/asia">🌏 Asia</a></li>
+                            <li><a class="dropdown-item" href="/continent/europe">🌍 Europe</a></li>
+                            <li><a class="dropdown-item" href="/continent/north_america">🌎 North America</a></li>
+                            <li><a class="dropdown-item" href="/continent/south_america">🌎 South America</a></li>
+                            <li><a class="dropdown-item" href="/continent/africa">🌍 Africa</a></li>
+                            <li><a class="dropdown-item" href="/continent/oceania">🌏 Oceania</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Accessibility Controls -->
+                <div class="d-flex align-items-center gap-2">
+                    <!-- Text size buttons -->
+                    <button class="btn btn-sm btn-outline-light" 
+                            onclick="changeFontSize('increase')"
+                            aria-label="Increase text size">
+                        A+
+                    </button>
+                    <button class="btn btn-sm btn-outline-light" 
+                            onclick="changeFontSize('decrease')"
+                            aria-label="Decrease text size">
+                        A-
+                    </button>
+
+                    <!-- High contrast toggle -->
+                    <button class="btn btn-sm btn-outline-light"
+                            onclick="toggleContrast()"
+                            aria-label="Toggle high contrast mode">
+                        <i class="bi bi-circle-half"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Skip to main content (for screen readers) -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- ── LOADING OVERLAY ── -->
+    <div id="loading-overlay" class="loading-overlay d-none"
+        role="status"
+        aria-label="Loading news, please wait">
+        <div class="loading-box text-center">
+            <div class="globe-spinner mb-3">🌍</div>
+            <div class="loading-bar-container mb-3">
+                <div class="loading-bar"></div>
+            </div>
+            <p class="loading-text text-white mb-1 fw-bold">
+                Fetching latest news...
+            </p>
+            <p class="loading-subtext text-white-50 small">
+                Getting stories from around the world
+            </p>
+        </div>
+    </div>
+
+    <!-- ── MAIN CONTENT ── -->
+    <main id="main-content" role="main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- ── FOOTER ── -->
+    <footer class="footer bg-dark text-light py-4 mt-5" role="contentinfo">
+        <div class="container text-center">
+            <p class="mb-1">🌐 GlobalNews - News from around the world, simplified.</p>
+            <p class="mb-0 text-muted small">
+                News sourced from NDTV, Al Jazeera, BBC, DW News and more.
+                Always linking back to original sources.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Our custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+</html>

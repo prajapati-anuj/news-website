@@ -1,0 +1,301 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<!-- ── BREAKING NEWS TICKER ── -->
+<div class="breaking-news-bar bg-danger text-white py-2"
+     aria-label="Breaking News Ticker"
+     role="marquee">
+    <div class="container">
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge bg-white text-danger fw-bold flex-shrink-0">
+                🔴 LIVE
+            </span>
+            <div class="ticker-wrapper overflow-hidden flex-grow-1">
+                <div class="ticker-content" id="news-ticker">
+                    Loading latest headlines...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── HERO SECTION ── -->
+<section class="hero-section text-white" aria-label="Welcome Section">
+    <div class="container">
+        <div class="row align-items-center min-vh-50">
+
+            <!-- Left: Text Content -->
+            <div class="col-lg-6 py-5">
+                <div class="hero-badge mb-3">
+                    <span class="badge bg-white text-primary px-3 py-2">
+                        🌐 Trusted News From Around The World
+                    </span>
+                </div>
+                <h1 class="hero-title display-4 fw-bold mb-3">
+                    Stay Informed,<br>
+                    <span class="text-warning">Stay Simple</span>
+                </h1>
+                <p class="hero-subtitle lead mb-4 text-white-50">
+                    Short, easy-to-read news from every corner of the globe.
+                    Fully accessible for everyone including visually impaired users.
+                </p>
+
+                <!-- Stats -->
+                <div class="hero-stats d-flex gap-4 mb-4">
+                    <div>
+                        <div class="h3 fw-bold mb-0 text-warning">6</div>
+                        <div class="small text-white-50">Continents</div>
+                    </div>
+                    <div>
+                        <div class="h3 fw-bold mb-0 text-warning">30+</div>
+                        <div class="small text-white-50">Countries</div>
+                    </div>
+                    <div>
+                        <div class="h3 fw-bold mb-0 text-warning">Free</div>
+                        <div class="small text-white-50">Always</div>
+                    </div>
+                    <div>
+                        <div class="h3 fw-bold mb-0 text-warning">Live</div>
+                        <div class="small text-white-50">Updates</div>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="#continents"
+                       class="btn btn-warning btn-lg fw-bold px-4"
+                       aria-label="Start reading news">
+                        Start Reading <i class="bi bi-arrow-down"></i>
+                    </a>
+                    <a href="/continent/asia"
+                       class="btn btn-outline-light btn-lg px-4"
+                       aria-label="Explore Asian news">
+                        🌏 Explore Asia
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right: Globe Animation -->
+            <div class="col-lg-6 text-center py-5 d-none d-lg-block">
+                <div class="globe-container">
+                    <div class="globe-animation">🌍</div>
+                    <div class="globe-ring"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── CONTINENTS SECTION ── -->
+<section class="container my-5 py-3" 
+         id="continents"
+         aria-label="Browse News by Continent">
+
+    <div class="text-center mb-5">
+        <h2 class="display-6 fw-bold">
+            <i class="bi bi-globe"></i> Browse by Continent
+        </h2>
+        <p class="text-muted lead">
+            Select a continent to explore news from countries around the world
+        </p>
+    </div>
+
+    <div class="row g-4">
+        {% for key, continent in continents.items() %}
+        <div class="col-sm-6 col-lg-4">
+            <a href="/continent/{{ key }}"
+               class="text-decoration-none"
+               aria-label="View news from {{ continent.name }}">
+                <div class="continent-card card h-100 shadow-sm border-0">
+
+                    <!-- Card Top Color Bar -->
+                    <div class="continent-card-top bg-{{ continent.color }}"></div>
+
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-start gap-3">
+                            <span class="continent-emoji fs-1">
+                                {% if continent.name == 'Asia' %}🌏
+                                {% elif continent.name == 'Europe' %}🌍
+                                {% elif continent.name == 'North America' %}🌎
+                                {% elif continent.name == 'South America' %}🌎
+                                {% elif continent.name == 'Africa' %}🌍
+                                {% elif continent.name == 'Oceania' %}🌏
+                                {% else %}🌐
+                                {% endif %}
+                            </span>
+                            <div>
+                                <h3 class="card-title h5 fw-bold mb-1">
+                                    {{ continent.name }}
+                                </h3>
+                                <p class="card-text text-muted small mb-2">
+                                    {{ continent.description }}
+                                </p>
+                                <div class="d-flex gap-3">
+                                    <span class="badge bg-light text-dark">
+                                        <i class="bi bi-flag"></i>
+                                        {{ continent.countries | length }} countries
+                                    </span>
+                                    <span class="badge bg-light text-success">
+                                        🟢 Live
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="card-footer bg-transparent border-0 px-4 pb-4">
+                        <span class="btn btn-{{ continent.color }} btn-sm w-100">
+                            Explore {{ continent.name }}
+                            <i class="bi bi-arrow-right ms-1"></i>
+                        </span>
+                    </div>
+
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ── FEATURES SECTION ── -->
+<section class="features-section py-5 mt-3" aria-label="Website Features">
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold">Why GlobalNews?</h2>
+            <p class="text-muted">Built for everyone, everywhere</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon-circle bg-primary-subtle mb-3">
+                        📰
+                    </div>
+                    <h3 class="h5 fw-bold">Short & Simple</h3>
+                    <p class="text-muted">
+                        Every article summarized into 2-3 easy sentences.
+                        No information overload, just what matters.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon-circle bg-success-subtle mb-3">
+                        👁️
+                    </div>
+                    <h3 class="h5 fw-bold">Fully Accessible</h3>
+                    <p class="text-muted">
+                        Built for everyone including visually impaired users.
+                        Every article can be read aloud in multiple languages.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon-circle bg-warning-subtle mb-3">
+                        🌍
+                    </div>
+                    <h3 class="h5 fw-bold">Global Coverage</h3>
+                    <p class="text-muted">
+                        News from 6 continents sourced from trusted
+                        international channels like BBC, Al Jazeera and more.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon-circle bg-info-subtle mb-3">
+                        🔍
+                    </div>
+                    <h3 class="h5 fw-bold">Category Filters</h3>
+                    <p class="text-muted">
+                        Filter news by Politics, Sports, Technology,
+                        Health, Education and more with one click.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon-circle bg-danger-subtle mb-3">
+                        🔴
+                    </div>
+                    <h3 class="h5 fw-bold">Live Updates</h3>
+                    <p class="text-muted">
+                        News is fetched directly from trusted RSS feeds
+                        so you always get the latest stories.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4 h-100">
+                    <div class="feature-icon-circle bg-secondary-subtle mb-3">
+                        🌐
+                    </div>
+                    <h3 class="h5 fw-bold">Multi Language</h3>
+                    <p class="text-muted">
+                        Read news in local languages. Hindi support
+                        for India with more languages coming soon.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER CTA ── -->
+<section class="cta-section text-white text-center py-5">
+    <div class="container">
+        <h2 class="display-6 fw-bold mb-3">
+            Ready to explore global news?
+        </h2>
+        <p class="lead text-white-50 mb-4">
+            Start with your continent and discover what's happening
+            in your part of the world.
+        </p>
+        <a href="#continents"
+           class="btn btn-warning btn-lg px-5 fw-bold">
+            Get Started <i class="bi bi-arrow-up"></i>
+        </a>
+    </div>
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+// ── BREAKING NEWS TICKER ─────────────────────────────────────────
+// Fetch headlines from BBC global feed and show in ticker
+async function loadTicker() {
+    // Hardcoded headlines as fallback (will replace with live later)
+    const headlines = [
+        "Welcome to GlobalNews - Your source for global news simplified",
+        "Browse news from 6 continents and 30+ countries",
+        "All news is accessible with our Read Aloud feature",
+        "Filter news by category: Politics, Sports, Technology and more",
+        "Select a continent below to start reading"
+    ]
+
+    const ticker = document.getElementById('news-ticker')
+    if (ticker) {
+        ticker.textContent = headlines.join('   •••   ')
+    }
+}
+
+// Run when page loads
+document.addEventListener('DOMContentLoaded', loadTicker)
+</script>
+{% endblock %}

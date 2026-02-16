@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ continent.name }} News{% endblock %}
+
+{% block content %}
+
+<!-- ── HEADER ── -->
+<section class="continent-header text-white py-5 bg-{{ continent.color }}"
+         aria-label="Continent Header">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a href="/" class="text-white-50">Home</a>
+                </li>
+                <li class="breadcrumb-item active text-white" aria-current="page">
+                    {{ continent.name }}
+                </li>
+            </ol>
+        </nav>
+        <div class="d-flex align-items-center gap-3">
+            <span class="display-3">{{ continent.emoji }}</span>
+            <div>
+                <h1 class="mb-1">{{ continent.name }}</h1>
+                <p class="mb-0 text-white-50">{{ continent.description }}</p>
+            </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="mt-4 d-flex gap-4">
+            <div class="text-center">
+                <div class="h3 mb-0 fw-bold">
+                    {{ continent.countries | length }}
+                </div>
+                <div class="small text-white-50">Countries</div>
+            </div>
+            <div class="text-center">
+                <div class="h3 mb-0 fw-bold">Live</div>
+                <div class="small text-white-50">News Feed</div>
+            </div>
+            <div class="text-center">
+                <div class="h3 mb-0 fw-bold">Free</div>
+                <div class="small text-white-50">Always</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── COUNTRIES GRID ── -->
+<section class="container my-5" aria-label="Select a country">
+    <h2 class="mb-2">
+        <i class="bi bi-map"></i> Select a Country
+    </h2>
+    <p class="text-muted mb-4">
+        Click on any country to read the latest news
+    </p>
+
+    <div class="row g-3">
+        {% for code, info in continent.countries.items() %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <a href="/country/{{ continent_key }}/{{ code }}"
+               class="text-decoration-none"
+               aria-label="Read news from {{ info.name }}">
+                <div class="country-card card text-center p-3 h-100 shadow-sm">
+
+                    <!-- Flag Image (works on Windows!) -->
+                    <div class="country-flag mb-2">
+                        <img src="https://flagcdn.com/96x72/{{ code }}.png"
+                            alt="{{ info.name }} flag"
+                            width="96"
+                            height="72"
+                            style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"
+                            onerror="this.style.display='none'">
+                    </div>
+
+                    <!-- Country Name -->
+                    <h3 class="card-title h6 mb-1 fw-bold">
+                        {{ info.name }}
+                    </h3>
+
+                    <!-- Read news label -->
+                    <small class="text-muted">
+                        <i class="bi bi-newspaper"></i> Read News
+                    </small>
+
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

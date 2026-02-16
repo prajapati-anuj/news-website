@@ -1,0 +1,21 @@
+# Virtual Environment (too large to upload)
+venv/
+
+# Secret keys (never share these!)
+.env
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# VS Code settings
+.vscode/
+
+# Windows files
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log

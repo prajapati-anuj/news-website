@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ country_name }} News{% endblock %}
+
+{% block content %}
+
+<!-- ── SKELETON LOADER ── -->
+<div id="skeleton-loader" class="container my-4 d-none">
+    {% for i in range(5) %}
+    <div class="card mb-4 shadow-sm skeleton-card">
+        <div class="card-body">
+            <div class="d-flex gap-2 mb-3">
+                <div class="skeleton-box" style="width:80px; height:22px; border-radius:20px;"></div>
+                <div class="skeleton-box" style="width:100px; height:22px; border-radius:20px;"></div>
+            </div>
+            <div class="skeleton-box mb-2" style="width:90%; height:24px;"></div>
+            <div class="skeleton-box mb-2" style="width:75%; height:24px;"></div>
+            <div class="skeleton-box mb-3" style="width:100%; height:18px;"></div>
+            <div class="skeleton-box mb-1" style="width:95%; height:18px;"></div>
+            <div class="d-flex gap-2 mt-3">
+                <div class="skeleton-box" style="width:100px; height:32px; border-radius:6px;"></div>
+                <div class="skeleton-box" style="width:80px; height:32px; border-radius:6px;"></div>
+                <div class="skeleton-box" style="width:110px; height:32px; border-radius:6px;"></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- ── HEADER ── -->
+<section class="bg-success text-white py-4" aria-label="Country Header">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+                <li class="breadcrumb-item">
+                    <a href="/" class="text-white-50">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="/continent/{{ continent_key }}" class="text-white-50">
+                        {{ continent.name }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active text-white" aria-current="page">
+                    {{ country_name }}
+                </li>
+            </ol>
+        </nav>
+
+        <!-- Country name with flag -->
+        <div class="d-flex align-items-center gap-3">
+            <!-- <span class="display-4">{{ country_flag }}</span> -->
+            <img src="https://flagcdn.com/96x72/{{ country_code }}.png"
+                alt="{{ country_name }} flag"
+                width="72"
+                height="54"
+                style="border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"
+                onerror="this.style.display='none'">
+            <div>
+                <h1 class="mb-0">{{ country_name }} News</h1>
+                <p class="mb-0 mt-1 text-white-50">
+                    {{ articles|length }} latest stories summarized for you
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CATEGORY FILTERS ── -->
+<section class="bg-white border-bottom py-3 sticky-top" 
+         aria-label="Filter news by category">
+    <div class="container">
+        <div class="d-flex gap-2 flex-wrap align-items-center">
+            
+            <span class="text-muted small me-1">
+                <i class="bi bi-funnel"></i> Filter:
+            </span>
+
+            <!-- All button -->
+            <button class="btn btn-sm btn-primary category-btn active"
+                    onclick="filterCategory('All', this)"
+                    aria-label="Show all news">
+                All
+            </button>
+
+            <!-- Category buttons - generated from articles -->
+            {% set categories = [] %}
+            {% for article in articles %}
+                {% if article.category not in categories %}
+                    {% set _ = categories.append(article.category) %}
+                    <button class="btn btn-sm btn-outline-secondary category-btn"
+                            onclick="filterCategory('{{ article.category }}', this)"
+                            aria-label="Filter by {{ article.category }}">
+                        {{ category_emoji(article.category) }} {{ article.category }}
+                    </button>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Read All Headlines Button -->
+            <div class="ms-auto">
+                <button class="btn btn-sm btn-outline-primary"
+                        onclick="readAllHeadlines()"
+                        aria-label="Read all headlines aloud">
+                    <i class="bi bi-volume-up"></i> Read All
+                </button>
+                <button class="btn btn-sm btn-outline-danger ms-1"
+                        onclick="stopReading()"
+                        aria-label="Stop reading">
+                    <i class="bi bi-stop-circle"></i> Stop
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── NEWS ARTICLES ── -->
+<section class="container my-4" aria-label="News Articles">
+
+    {% if articles %}
+
+        <!-- Article count display -->
+        <p class="text-muted small mb-3" id="article-count">
+            Showing <span id="visible-count">{{ articles|length }}</span> 
+            of {{ articles|length }} articles
+        </p>
+
+        <!-- News Cards -->
+        {% for article in articles %}
+        <article class="card mb-4 shadow-sm news-card"
+                 data-category="{{ article.category }}"
+                 aria-label="News article: {{ article.title }}">
+            <div class="card-body">
+
+                <!-- Source, Category & Time -->
+                <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-1">
+                    <div class="d-flex gap-2">
+                        <span class="badge bg-primary">
+                            {{ article.source }}
+                        </span>
+                        <span class="badge category-badge bg-{{ category_color(article.category) }}">
+                            {{ category_emoji(article.category) }} {{ article.category }}
+                        </span>
+                    </div>
+                    <small class="text-muted">
+                        <i class="bi bi-clock"></i> {{ article.published }}
+                    </small>
+                </div>
+
+                <!-- Title -->
+                <h2 class="card-title h5">{{ article.title }}</h2>
+
+                <!-- Summary -->
+                <p class="card-text text-muted">{{ article.summary }}</p>
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 flex-wrap mt-3">
+
+                    <button class="btn btn-sm btn-outline-primary"
+                            onclick="readAloud('{{ article.safe_title }}. {{ article.safe_summary }}')"
+                            aria-label="Read this article aloud">
+                        <i class="bi bi-volume-up"></i> Read Aloud
+                    </button>
+
+                    <button class="btn btn-sm btn-outline-danger"
+                            onclick="stopReading()"
+                            aria-label="Stop reading aloud">
+                        <i class="bi bi-stop-circle"></i> Stop
+                    </button>
+
+                    <a href="{{ article.url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="btn btn-sm btn-outline-secondary"
+                       aria-label="Read full article on {{ article.source }}">
+                        <i class="bi bi-box-arrow-up-right"></i> Full Article
+                    </a>
+
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>No news available</strong> for {{ country_name }} right now.
+            Please try again in a few minutes.
+        </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+    // ── CATEGORY FILTER ──────────────────────────────────────────
+    function filterCategory(category, btn) {
+
+        // Update active button style
+        document.querySelectorAll('.category-btn').forEach(b => {
+            b.classList.remove('btn-primary', 'active')
+            b.classList.add('btn-outline-secondary')
+        })
+        btn.classList.remove('btn-outline-secondary')
+        btn.classList.add('btn-primary', 'active')
+
+        // Show/hide articles based on category
+        const articles = document.querySelectorAll('.news-card')
+        let visibleCount = 0
+
+        articles.forEach(article => {
+            if (category === 'All' || 
+                article.dataset.category === category) {
+                article.style.display = 'block'
+                visibleCount++
+            } else {
+                article.style.display = 'none'
+            }
+        })
+
+        // Update count display
+        document.getElementById('visible-count').textContent = visibleCount
+
+        // Announce to screen readers
+        const announcement = `Showing ${visibleCount} ${category} articles`
+        announceToScreenReader(announcement)
+    }
+
+
+    // ── SCREEN READER ANNOUNCEMENT ───────────────────────────────
+    function announceToScreenReader(message) {
+        const announcer = document.getElementById('sr-announcer')
+        if (announcer) {
+            announcer.textContent = message
+        }
+    }
+
+
+    // ── READ ALL HEADLINES ───────────────────────────────────────
+    function readAllHeadlines() {
+
+        // Only read visible articles
+        const visibleArticles = document.querySelectorAll(
+            '.news-card[style="display: block;"], .news-card:not([style*="display: none"])'
+        )
+
+        window.speechSynthesis.cancel()
+
+        visibleArticles.forEach(article => {
+            const category = article.dataset.category
+            const titleEl = article.querySelector('h2')
+            if (titleEl) {
+                const utterance = new SpeechSynthesisUtterance(
+                    titleEl.textContent.trim()
+                )
+                utterance.lang = 'en'
+                utterance.rate = 0.9
+                window.speechSynthesis.speak(utterance)
+            }
+        })
+    }
+
+</script>
+
+<!-- Screen reader live region (invisible but announced) -->
+<div id="sr-announcer" 
+     aria-live="polite" 
+     aria-atomic="true" 
+     class="visually-hidden">
+</div>
+
+{% endblock %}
