@@ -30,7 +30,7 @@ Coming soon...
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/news-website.git
+git clone https://github.com/prajapati-anuj/news-website.git
 cd news-website
 ```
 
